@@ -113,10 +113,6 @@ if __name__ == "__main__":
     argc = len(sys.argv)
     if not (argc == 3):
         print "Usage: add_prefix.py <my_prject_folder_name> <resources_prefix>"
-        print ""
-        print "Description: rename all your android resources by adding a prefix"
-        print "Tips: put add_prefix.py to your workspace directory, and run add_prefix.py <my_prject_folder_name> <resources_prefix>"
-        print ""
     else:
         # commit shared variables
         target_dir = sys.argv[1]
