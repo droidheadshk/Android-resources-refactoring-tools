@@ -5,6 +5,10 @@ import re
 import sys
 import xml.dom.minidom
 
+reload(sys)
+# set utf-8 as default, change it if you use other encoding format.
+sys.setdefaultencoding("utf-8")
+
 def is_valid_file(filename, extension_name):
     return filename.lower().endswith(extension_name)
 
@@ -35,6 +39,8 @@ def replace_file(filepath, search_pattern, exclude_pattern, target_text):
                 out.write(line)
                     
         out.close()
+        f.close()
+        os.remove(filepath)
         os.rename(out_filename, filepath)
 
 # Replace pattern from search_pattern to target_text, on all files in a directory
@@ -64,6 +70,12 @@ def patch_attribute_name(dir_name, extension_name, resource_prefix):
                             if (not name.startswith(resource_prefix)):
                                 name = resource_prefix + name
                                 x.setAttribute("name", name)
+                    for x in resources_nodes.childNodes:
+                        if (x.nodeType == 1 and x.hasAttribute("parent")):
+                            name = x.getAttribute("parent")
+                            if (not name.startswith("@android:") and not name.startswith("android:") and not name.startswith(resource_prefix)):
+                                name = resource_prefix + name
+                                x.setAttribute("parent", name)
                             
                     f = open(fullname, "w")
                     f.write(xml_dom.toxml())
