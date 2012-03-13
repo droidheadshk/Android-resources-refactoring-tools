@@ -109,11 +109,14 @@ def rename_asset_files(dir_name, resource_prefix):
                 asset_str = fullname[len(assets_dir)+1:]
                 new_asset_str = new_fullname[len(assets_dir)+1:]
                 
+                # for windows
+                asset_str = asset_str.replace(os.sep,"/")
+                new_asset_str = new_asset_str.replace(os.sep,"/")
+                
                 search_for_java_text = '\"%s\"'%asset_str
                 exclude_java_text = '\"%s\"'%new_asset_str
                 target_java_text = '\"%s\"'%new_asset_str
 
-                print "xxx"
                 print search_for_java_text
                 print exclude_java_text
                 print target_java_text
